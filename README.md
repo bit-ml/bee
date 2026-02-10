@@ -1,6 +1,6 @@
 # Official repository for "Bridging Explainability and Embeddings: BEE Aware of Spuriousness" (ICLR 2026)
 
-[\[Arxiv\]](https://arxiv.org/abs/2410.18970) \[Blog Post\]
+[\[ArXiv\]](https://arxiv.org/abs/2410.18970) \[Blog Post\]
 
 **Authors**: Cristian Daniel Paduraru, Antonio Barbalau, Radu Filipescu, Andrei Liviu Nicolicioiu, Elena Burceanu 
 
@@ -19,61 +19,96 @@
 ![Table 3](./images/Table_Models.png "")
 
 
+
 ## Setup
 
-With anaconda the environment used for development can be recreated using:
+1. Download repository
 
 ```
-conda env create -f environment.yml
+git clone https://github.com/bit-ml/bee.git
+cd bee
+```
+
+2. Download dataset
+```
+mkdir -p ./data/waterbirds && cd ./data/waterbirds
+wget https://nlp.stanford.edu/data/dro/waterbird_complete95_forest2water2.tar.gz
+tar -xzvf waterbird_complete95_forest2water2.tar.gz
+rm waterbird_complete95_forest2water2.tar.gz
+mv waterbird_complete95_forest2water2/metadata.csv ./metadata_waterbirds.csv
+sed -i '1s/^img_id,img_filename,y,split,place,place_filename$/img_id,filename,y,split,a,place_filename/' metadata.csv
+cd ../..
+```
+
+3. Setup environment
+
+```
+uv sync
+uv run python -c "import nltk; nltk.download('wordnet')"
+uv run python -c "import nltk; nltk.download('punkt_tab')"
 ```
 
 
-<!-- ## Data Collecton
-
-Instructions for downloading and preprocessing data will be made available in the next update. -->
 
 ## Main Procedures
 
 Cache the data embeddings and caption the dataset (only for the image classification ones).
 ```
-python step_0_cache_embeddings_and_caption.py --dataset <dataset_name>
-// Example
-python step_0_cache_embeddings_and_caption.py --dataset Waterbirds
+uv run python step_0_cache_embeddings_and_caption.py --dataset <dataset_name>
 ```
+Example:
+```
+uv run python step_0_cache_embeddings_and_caption.py --dataset Waterbirds
+```
+
 
 ### Step 1
 Perform ERM on the dataset to learn the SCs. Add the `--only_spurious` flag for the experiments in Sec 5.3, where only samples containing SCs are used. If no GPU is available, also pass the `--device` argument.
 ```
-python step_1_ERM --dataset <dataset_name> [--device cpu] [--only_spurious]
-// Example
-python step_1_ERM --dataset Waterbirds --only_spurious
+uv run python step_1_ERM.py --dataset <dataset_name> [--device cpu] [--only_spurious]
 ```
+Example
+```
+uv run python step_1_ERM.py --dataset Waterbirds
+```
+
+
 ### Step 2
-Extract keywords, filter out class related concepts, then rank the remaining ones and apply the dynamic threshold. Step 2a requires GPU for the LLM based filtering.
+Extract keywords, filter out class related concepts, then rank the remaining ones and apply the dynamic threshold. Step 2a requires a GPU in order to run the LLM-based filtering.
 ```
-python step_2a_filter --dataset <dataset_name> [--only_spurious] 
-python step_2bc_rank_and_threshold --dataset <dataset_name> [--only_spurious]
-
-// Example
-python step_2a_filter --dataset Waterbirds --only_spurious 
-python step_2bc_rank_and_threshold --dataset Waterbirds --only_spurious
+uv run python step_2a_filter.py --dataset <dataset_name> [--only_spurious] 
+uv run python step_2bc_rank_and_threshold.py --dataset <dataset_name> [--only_spurious]
+```
+Example:
+```
+uv run python step_2a_filter.py --dataset Waterbirds
+uv run python step_2bc_rank_and_threshold.py --dataset Waterbirds
 ```
 
-### Experiments from Section 5.2 - Training in a Fully Spurious Setup
+After this step the results can be found in `./cache/xai`. These results include: captions, keywords and discovered biases.
+
+
+## Reproducing experiments from Section 5.2
+
+### Training in a Fully Spurious Setup
 SC regularization experiments
 Perform linear probing with SC regularization (requires running steps 1&2 with the `--only_spurious` flag).
 
 ```
-python bias_regularization.py --dataset <dataset_name>  --only_spuriouds [--random_biases]
-// Example 
-python bias_regularization.py --dataset CivilComments  --only_spuriouds --random_biases
+uv run python bias_regularization.py --dataset <dataset_name>  --only_spuriouds [--random_biases]
+```
+Example:
+```
+uv run python bias_regularization.py --dataset CivilComments  --only_spuriouds --random_biases
 ```
 
 GroupDRO only on the samples showcasing spuriously correlated attributes:
 ```
-python lp_groupdro.py --dataset <dataset_name> --only_spurious
-// Example
-python lp_groupdro.py --dataset CelebA --only_spurious
+uv run python lp_groupdro.py --dataset <dataset_name> --only_spurious
+```
+Example:
+```
+uv run python lp_groupdro.py --dataset CelebA --only_spurious
 ```
 
 ## Citation

@@ -1,9 +1,9 @@
 import os
 
-DATA_PATH = os.environ.get("DATA_PATH", "../data/")
-RESULTS_PATH = "../results/xai/"
-CACHE_PATH = "../cache/xai/"
-CKPT_PATH = "../ckpt/xai/"
+DATA_PATH = os.environ.get("DATA_PATH", "./data/")
+RESULTS_PATH = "./results/xai/"
+CACHE_PATH = "./cache/xai/"
+CKPT_PATH = "./ckpt/xai/"
 
 METADATA_NAME = {
     "Waterbirds": "metadata_waterbirds.csv",
