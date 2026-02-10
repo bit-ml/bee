@@ -1,16 +1,22 @@
-# WASP: A Weight-Space Approach for Detecting Learned Spuriousness
+# Official repository for "Bridging Explainability and Embeddings: BEE Aware of Spuriousness" (ICLR 2026)
+
+[\[Arxiv\]](https://arxiv.org/abs/2410.18970) \[Blog Post\]
 
 **Authors**: Cristian Daniel Paduraru, Antonio Barbalau, Radu Filipescu, Andrei Liviu Nicolicioiu, Elena Burceanu 
 
-**Abstract**: It is of crucial importance to train machine learning models such that they clearly understand what defines each class in a given task. Though there is a sum of works dedicated to identifying the spurious correlations featured by a dataset that may impact the model's understanding of the classes, all current approaches rely solely on data or error analysis. That is, they cannot point out spurious correlations learned by the model that are not already pointed out by the counterexamples featured in the validation or training sets. We propose a method that transcends this limitation, switching the focus from analyzing a model's predictions to analyzing the model's weights, the mechanism behind the making of the decisions, which proves to be more insightful. Our proposed Weight-space Approach to detecting Spuriousness (WASP) relies on analyzing the weights of foundation models as they drift towards capturing various (spurious) correlations while being fine-tuned on a given dataset. We demonstrate that different from previous works, our method (i) can expose spurious correlations featured by a dataset even when they are not exposed by training or validation counterexamples, (ii) it works for multiple modalities such as image and text, and (iii) it can uncover previously untapped spurious correlations learned by ImageNet-1k classifiers.
+**Abstract**: Current methods for detecting spurious correlations rely on analyzing dataset statistics or error patterns, leaving many harmful shortcuts invisible when counterexamples are absent. We introduce **BEE** (Bridging Explainability and Embeddings), a framework that shifts the focus from model predictions to the weight space, and to the embedding geometry underlying decisions. By analyzing how fine-tuning perturbs pretrained representations, BEE uncovers spurious correlations that remain hidden from conventional evaluation pipelines. We use linear probing as a transparent diagnostic lens, revealing spurious features that not only persist after full fine-tuning but also transfer across diverse state-of-the-art models. Our experiments cover numerous datasets and domains: vision (Waterbirds, CelebA, ImageNet-1k), language (CivilComments, MIMIC-CXR medical notes), and multiple embedding families (CLIP, CLIP-DataComp.XL, mGTE, BLIP2, SigLIP2). BEE consistently exposes spurious correlations: from concepts that slash the ImageNet accuracy by up to 95\%, to clinical shortcuts in MIMIC-CXR notes that induce dangerous false negatives. Together, these results position BEE as a general and principled tool for diagnosing spurious correlations in weight space, enabling principled dataset auditing and more trustworthy foundation models.
 
-[arxiv preprint](https://arxiv.org/abs/2410.18970)
+## Method Overview
 
-## Example Results
+![Figure 2](./images/Figure_Method.png "")
 
-![Figure 1](./images/Figure_4.png "")
-![Table 1](./images/Table_1.png "")
-![Table 2](./images/Table_2.png "")
+## Examples
+
+![Figure 1](./images/Figure_ImageNet.png "")
+
+![Table 2](./images/Table_Examples.png "")
+
+![Table 3](./images/Table_Models.png "")
 
 
 ## Setup
@@ -68,5 +74,20 @@ GroupDRO only on the samples showcasing spuriously correlated attributes:
 python lp_groupdro.py --dataset <dataset_name> --only_spurious
 // Example
 python lp_groupdro.py --dataset CelebA --only_spurious
+```
+
+## Citation
+
+```
+@inproceedings{paduraru2026bee,
+    author       = {Cristian Daniel Paduraru and 
+                    Antonio Barbalau and 
+                    Radu Filipescu and 
+                    Andrei Liviu Nicolicioiu and 
+                    Elena Burceanu},
+    title        = {Bridging Explainability and Embeddings: BEE Aware of Spuriousness},
+    booktitle    = {{ICLR}},
+    year         = {2026},
+}
 ```
 
