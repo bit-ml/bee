@@ -30,6 +30,7 @@ cd bee
 ```
 
 2. Download dataset
+
 We provide the setup intruction for the Waterbirds dataset here and further instructions enabling developers to use their own dataset in the "Using a different dataset" section below.
 ```bash
 mkdir -p ./data/waterbirds && cd ./data/waterbirds
