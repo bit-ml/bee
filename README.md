@@ -31,7 +31,7 @@ cd bee
 
 2. Download dataset
 
-We provide the setup intruction for the Waterbirds dataset here and further instructions enabling developers to use their own dataset in the "Using a different dataset" section below.
+We provide the setup intructions for the Waterbirds dataset here and further instructions enabling developers to use their own dataset in the "Using a different dataset" section below.
 ```bash
 mkdir -p ./data/waterbirds && cd ./data/waterbirds
 wget https://nlp.stanford.edu/data/dro/waterbird_complete95_forest2water2.tar.gz
