@@ -1,5 +1,5 @@
 [project]
-name = "icml"
+name = "bee"
 version = "0.1.0"
 description = "BEE"
 readme = "README.md"
