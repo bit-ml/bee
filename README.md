@@ -37,7 +37,7 @@ wget https://nlp.stanford.edu/data/dro/waterbird_complete95_forest2water2.tar.gz
 tar -xzvf waterbird_complete95_forest2water2.tar.gz
 rm waterbird_complete95_forest2water2.tar.gz
 mv waterbird_complete95_forest2water2/metadata.csv ./metadata_waterbirds.csv
-sed -i '1s/^img_id,img_filename,y,split,place,place_filename$/img_id,filename,y,split,a,place_filename/' metadata.csv
+sed -i '1s/^img_id,img_filename,y,split,place,place_filename$/img_id,filename,y,split,a,place_filename/' metadata_waterbirds.csv
 cd ../..
 ```
 
