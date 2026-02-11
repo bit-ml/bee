@@ -129,7 +129,7 @@ filename,split,y,a
 ```
 Where: 
 - `filename` is the entire path of the image relative to the `dataset_image_dir`
-- `split` $\in \{0, 1, 2\}$ specifies whether the sample belongs to the training, validation or test split respectively
+- `split` $\in$ {0, 1, 2} specifies whether the sample belongs to the training, validation or test split respectively
 - `y` is the label for the downstream task, i.e. the class label
 - `a` is the label for the protected attribute, i.e. the environment label
 
