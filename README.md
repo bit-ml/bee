@@ -1,6 +1,6 @@
 # Official repository for "Bridging Explainability and Embeddings: BEE Aware of Spuriousness" (ICLR 2026)
 
-[\[ArXiv\]](https://arxiv.org/abs/2410.18970) \[Blog Post\]
+[\[ArXiv\]](https://arxiv.org/abs/2410.18970) [\[Blog Post\]](https://bit-ml.github.io/blog/bee-aware-of-spuriousness/)
 
 **Authors**: Cristian Daniel Paduraru, Antonio Barbalau, Radu Filipescu, Andrei Liviu Nicolicioiu, Elena Burceanu 
 
